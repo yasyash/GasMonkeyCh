@@ -263,7 +263,7 @@ router.get('/get_monthly', authenticate, (req, resp) => {
         let result_parse2 = JSON.stringify(result[2]);
         let arr2 = JSON.parse(result_parse2);
 
-        const template_chemical = ['NO', 'NO2', 'NH3', 'SO2', 'H2S', 'O3', 'CO', 'CH2O', 'PM1', 'PM2.5', 'PM10', 'Пыль общая'];
+        const template_chemical = ['NO', 'NO2', 'NH3', 'SO2', 'H2S', 'O3', 'CO', 'CH2O', 'PM1', 'PM2.5', 'PM10', 'Пыль общая', 'бензол', 'толуол', 'этилбензол', 'м,п-ксилол', 'о-ксилол', 'хлорбензол', 'стирол', 'фенол'];
 
         let dataList = arr0;
         let sensorsList = arr1;
@@ -296,7 +296,9 @@ router.get('/get_monthly', authenticate, (req, resp) => {
             (element.chemical == 'SO2') || (element.chemical == 'H2S') ||
             (element.chemical == 'O3') || (element.chemical == 'CO') || (element.chemical == 'CH2O') ||
             (element.chemical == 'PM1') || (element.chemical == 'PM2.5') ||
-            (element.chemical == 'PM10') || (element.chemical == 'Пыль общая')) {
+            (element.chemical == 'PM10') || (element.chemical == 'Пыль общая') || (element.chemical == 'бензол') ||
+            (element.chemical == 'толуол') || (element.chemical == 'этилбензол') || (element.chemical == 'м,п-ксилол') ||
+            (element.chemical == 'о-ксилол') || (element.chemical == 'хлорбензол') || (element.chemical == 'стирол') || (element.chemical == 'фенол')) {
 
 
 
@@ -374,7 +376,7 @@ router.get('/get_monthly', authenticate, (req, resp) => {
 
 
                             let dt = data_raw[ind];
-                            dt[element.chemical] = sum.toFixed(8);
+                            dt[element.chemical] = sum.toFixed(3);
 
 
                             data_raw[ind] = dt;
@@ -423,7 +425,7 @@ router.get('/get_monthly', authenticate, (req, resp) => {
                     avrg_measure.push({
 
                         'chemical': element.chemical,
-                        'value': quotient.toFixed(8), 'counts': counter,
+                        'value': quotient.toFixed(3), 'counts': counter,
                         //'min': min, 'min_time': min_time,
                         'max': max, 'max_time': max_time,
                         'min_sum': min_sum, 'min_time_sum': min_time_sum,
@@ -488,15 +490,15 @@ router.get('/get_monthly', authenticate, (req, resp) => {
             if (!isEmpty(filter)) {
                 filter.forEach(element => {
                     chemical.push(element.chemical);
-                    value.push(Number(element.value).toFixed(8));
+                    value.push(Number(element.value).toFixed(3));
                     counts.push(element.counts);
-                    min_sum.push(Number(element.min_sum).toFixed(8));
+                    min_sum.push(Number(element.min_sum).toFixed(3));
                     min_time_sum.push(element.min_time_sum);
-                    max_sum.push(Number(element.max_sum).toFixed(8));
+                    max_sum.push(Number(element.max_sum).toFixed(3));
                     max_time_sum.push(element.max_time_sum);
-                    // min.push(Number(element.min).toFixed(8));
+                    // min.push(Number(element.min).toFixed(3));
                     // min_time.push(element.min_time);
-                    max.push(Number(element.max).toFixed(8));
+                    max.push(Number(element.max).toFixed(3));
                     max_time.push(element.max_time);
                     counter_macs1.push(element.counter_macs1);
                     counter_macs5.push(element.counter_macs5);
@@ -537,7 +539,10 @@ router.get('/get_monthly', authenticate, (req, resp) => {
             pollution.push({
                 time: element.time, valueNO: element.NO, valueNO2: element.NO2, valueNH3: element.NH3, valueSO2: element.SO2,
                         valueH2S: element.H2S, valueO3: element.O3, valueCO: element.CO,valueCH2O: element.CH2O, valuePM1: element.PM1,
-                        valuePM25: element['PM2.5'],valuePM10: element.PM10, valueTSP: element['Пыль общая']
+                        valuePM25: element['PM2.5'],valuePM10: element.PM10, valueTSP: element['Пыль общая'],
+                        valueC6H6: element['бензол'], valueC7H8: element['толуол'], valueC8H10: element['этилбензол'],
+                        valueC8H10MP: element['м,п-ксилол'], valueC8H10O: element['о-ксилол'], valueC6H5Cl: element['хлорбензол'],
+                        valueC8H8: element['стирол'], valueC6H5OH: element['фенол']
             });
         })
         // values.push({
@@ -550,7 +555,10 @@ router.get('/get_monthly', authenticate, (req, resp) => {
                 pollution.push({
                     time: element[0], valueNO: element[1], valueNO2: element[2], valueNH3: element[3],valueSO2: element[4],
                     valueH2S: element[5], valueO3: element[6], valueCO: element[7], valueCH2O: element[8], valuePM1: element[9],
-                    valuePM25: element[10], valuePM10: element[11], valueTSP: element[12]
+                    valuePM25: element[10], valuePM10: element[11], valueTSP: element[12],
+                    valueC6H6: element[13], valueC7H8: element[14], valueC8H10: element[15],
+                    valueC8H10MP: element[16], valueC8H10O: element[17], valueC6H5Cl: element[18],
+                    valueC8H8:element[19], valueC6H5OH: element[20]
 
                 });
             }
@@ -602,7 +610,7 @@ router.get('/get_tza4', authenticate, (req, resp) => {
         var result_parse2 = JSON.stringify(result[2]);
         var arr2 = JSON.parse(result_parse2);
 
-        const template_chemical = ['NO', 'NO2', 'NH3', 'SO2', 'H2S', 'O3', 'CO', 'CH2O', 'PM1', 'PM2.5', 'PM10', 'Пыль общая'];
+        const template_chemical = ['NO', 'NO2', 'NH3', 'SO2', 'H2S', 'O3', 'CO', 'CH2O', 'PM1', 'PM2.5', 'PM10', 'Пыль общая',  'бензол', 'толуол', 'этилбензол', 'м,п-ксилол', 'о-ксилол', 'хлорбензол', 'стирол', 'фенол' ];
 
         var dataList = arr0;
         var sensorsList = arr1;

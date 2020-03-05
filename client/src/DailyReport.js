@@ -172,7 +172,7 @@ class DailyReport extends React.Component {
         // this.setState({ dateReportBegin: this.props.dateReportBegin, dateReportEnd: this.props.dateReportEnd });
         //this.loadData().then(data => this.setState({ sensorsList: data }));
 
-        const template_chemical = ['NO', 'NO2', 'NH3', 'SO2', 'H2S', 'O3', 'CO', 'CH2O', 'PM1', 'PM2.5', 'PM10', 'Пыль общая'];
+        const template_chemical = ['NO', 'NO2', 'NH3', 'SO2', 'H2S', 'O3', 'CO', 'CH2O', 'PM1', 'PM2.5', 'PM10', 'Пыль общая', 'бензол', 'толуол', 'этилбензол', 'м,п-ксилол', 'о-ксилол', 'хлорбензол', 'стирол', 'фенол'];
         if (isEmpty(state.dateReportBegin)) {
             params.period_from = this.props.dateReportBegin;
             params.period_to = this.props.dateReportEnd;
@@ -217,8 +217,9 @@ class DailyReport extends React.Component {
                         (element.chemical == 'SO2') || (element.chemical == 'H2S') ||
                         (element.chemical == 'O3') || (element.chemical == 'CO') || (element.chemical == 'CH2O') ||
                         (element.chemical == 'PM1') || (element.chemical == 'PM2.5') ||
-                        (element.chemical == 'PM10') || (element.chemical == 'Пыль общая') )
-                        {
+                        (element.chemical == 'PM10') || (element.chemical == 'Пыль общая') || (element.chemical == 'бензол') ||
+                        (element.chemical == 'толуол') || (element.chemical == 'этилбензол') || (element.chemical == 'м,п-ксилол') ||
+                        (element.chemical == 'о-ксилол') || (element.chemical == 'хлорбензол') || (element.chemical == 'стирол') || (element.chemical == 'фенол')) {
 
                         let filter = dataList.filter((item, i, arr) => {
                             return item.typemeasure == element.chemical;
@@ -285,7 +286,7 @@ class DailyReport extends React.Component {
                                     sum = sum / local_cnt;
 
                                     let dt = data_raw[ind];
-                                    dt[element.chemical] = sum.toFixed(8);
+                                    dt[element.chemical] = sum.toFixed(3);
 
                                     data_raw[ind] = dt;
 
@@ -324,7 +325,7 @@ class DailyReport extends React.Component {
                             avrg_measure.push({
 
                                 'chemical': element.chemical,
-                                'value': quotient.toFixed(8), 'counts': counter,
+                                'value': quotient.toFixed(3), 'counts': counter,
                                 'min': min, 'min_time': min_time,
                                 'max': max, 'max_time': max_time,
                                 'counter_macs1': counter_macs1,
@@ -378,11 +379,11 @@ class DailyReport extends React.Component {
                     if (!isEmpty(filter)) {
                         filter.forEach(element => {
                             chemical.push(element.chemical);
-                            value.push(Number(element.value).toFixed(8));
+                            value.push(Number(element.value).toFixed(3));
                             counts.push(element.counts);
-                            min.push(Number(element.min).toFixed(8));
+                            min.push(Number(element.min).toFixed(3));
                             min_time.push(element.min_time);
-                            max.push(Number(element.max).toFixed(8));
+                            max.push(Number(element.max).toFixed(3));
                             max_time.push(element.max_time);
                             counter_macs1.push(element.counter_macs1);
                             counter_macs5.push(element.counter_macs5);
@@ -418,8 +419,11 @@ class DailyReport extends React.Component {
                 data_raw.forEach((element, ind) => {
                     pollution.push({
                         time: element.time, valueNO: element.NO, valueNO2: element.NO2, valueNH3: element.NH3, valueSO2: element.SO2,
-                        valueH2S: element.H2S, valueO3: element.O3, valueCO: element.CO,valueCH2O: element.CH2O, valuePM1: element.PM1,
-                        valuePM25: element['PM2.5'],valuePM10: element.PM10, valueTSP: element['Пыль общая']
+                        valueH2S: element.H2S, valueO3: element.O3, valueCO: element.CO, valueCH2O: element.CH2O, valuePM1: element.PM1,
+                        valuePM25: element['PM2.5'], valuePM10: element.PM10, valueTSP: element['Пыль общая'],
+                        valueC6H6: element['бензол'], valueC7H8: element['толуол'], valueC8H10: element['этилбензол'],
+                        valueC8H10MP: element['м,п-ксилол'], valueC8H10O: element['о-ксилол'], valueC6H5Cl: element['хлорбензол'],
+                        valueC8H8: element['стирол'], valueC6H5OH: element['фенол']
                     });
                 })
                 // values.push({
@@ -430,10 +434,12 @@ class DailyReport extends React.Component {
                 _avrg_measure.forEach((element, ind) => {
                     if ((ind > 0) && (ind < _avrg_measure.length - 1)) {
                         pollution.push({
-                            time: element[0], valueNO: element[1], valueNO2: element[2], valueNH3: element[3],valueSO2: element[4],
-                            valueH2S: element[5], valueO3: element[6], valueCO: element[7], valueCH2O: element[8], valuePM1: element[9],
-                            valuePM25: element[10], valuePM10: element[11], valueTSP: element[12]
-
+                            time: element[0], valueNO: element[1], valueNO2: element[2], valueNH3: element[3], valueSO2: element[4],
+                            valueH2S: element[5], valueO3: element[6], valueCO:element[7], valueCH2O:element[8], valuePM1: element[9],
+                            valuePM25: element[10], valuePM10: element[11], valueTSP: element[12],
+                            valueC6H6: element[13], valueC7H8: element[14], valueC8H10: element[15],
+                            valueC8H10MP: element[16], valueC8H10O: element[17], valueC6H5Cl: element[18],
+                            valueC8H8:element[19], valueC6H5OH: element[20]
                         });
                     }
                 });
@@ -566,53 +572,78 @@ class DailyReport extends React.Component {
                                 <td style={{ 'width': '15%' }} rowSpan="2">
                                     <b> Время</b>
                                 </td>
-                                <td style={{ 'width': '85%' }} colSpan="12">
+                                <td style={{ 'width': '85%' }} colSpan="20">
                                     <b> Концентрация, мг/м. куб.</b>
                                 </td>
                             </tr>
-                            <tr >
-                                <td style={{ 'width': '7%' }} >
+                            <tr style = {{'fontSize': '11px'}}>
+                                <td style={{ 'width': '5%' }} >
                                     NO
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     NO2
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     NH3
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     SO2
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     H2S
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     O3
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     CO
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     CH2O
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     PM-1
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     PM-2.5
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     PM-10
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     Пыль общая
                                  </td>
+                                <td style={{ 'width': '5%' }} >
+                                    бензол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    толуол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    этилбензол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    м,п-ксилол
+
+                                    </td>
+                                <td style={{ 'width': '5%' }} >
+                                    о-ксилол
+                                  </td>
+                                <td style={{ 'width': '5%' }} >
+                                    хлорбензол
+                                </td>
+                                <td style={{ 'width': '5%' }} >
+                                    стирол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    фенол
+                                      </td>
                             </tr>
 
 
                             {(data_raw) &&// if not empty
                                 data_raw.map((option, i) => (
-                                    <tr key={'tr_' + i}>
+                                    <tr key={'tr_' + i} style = {{'fontSize': '11px'}}>
                                         <td> {option.time}</td>
                                         <td> {option.NO}</td>
                                         <td> {option.NO2}</td>
@@ -626,6 +657,14 @@ class DailyReport extends React.Component {
                                         <td> {option['PM2.5']}</td>
                                         <td> {option.PM10}</td>
                                         <td> {option['Пыль общая']}</td>
+                                        <td> {option['бензол']}</td>
+                                        <td> {option['толуол']}</td>
+                                        <td> {option['этилбензол']}</td>
+                                        <td> {option['м,п-ксилол']}</td>
+                                        <td> {option['о-ксилол']}</td>
+                                        <td> {option['хлорбензол']}</td>
+                                        <td> {option['стирол']}</td>
+                                        <td> {option['фенол']}</td>
 
 
 
@@ -637,7 +676,7 @@ class DailyReport extends React.Component {
                             {(avrg_measure) &&// if not empty
                                 avrg_measure.map((option, i) => (
                                     (i > 0 && i < avrg_measure.length - 1) &&
-                                    <tr key={'trm_' + i}>
+                                    <tr key={'trm_' + i} style = {{'fontSize': '11px'}}>
                                         <td> {option[0]}</td>
                                         <td> {option[1]}</td>
                                         <td> {option[2]}</td>
@@ -651,6 +690,14 @@ class DailyReport extends React.Component {
                                         <td> {option[10]}</td>
                                         <td> {option[11]}</td>
                                         <td> {option[12]}</td>
+                                        <td> {option[13]}</td>
+                                        <td> {option[14]}</td>
+                                        <td> {option[15]}</td>
+                                        <td> {option[16]}</td>
+                                        <td> {option[17]}</td>
+                                        <td> {option[18]}</td>
+                                        <td> {option[19]}</td>
+                                        <td> {option[20]}</td>
 
                                     </tr>
                                 ))}

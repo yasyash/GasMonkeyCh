@@ -229,7 +229,7 @@ class OperativeReport extends React.Component {
                         rows_measure.push({
                             'chemical': element.chemical + ', мг/м.куб.', 'macs': element.max_m,
                             'date': new Date(filter[filter.length - 1].date_time).format('dd-MM-Y'),
-                            'time': new Date(filter[filter.length - 1].date_time).format('H:mm:SS'), 'value': quotient.toFixed(6), 'className': class_css
+                            'time': new Date(filter[filter.length - 1].date_time).format('H:mm:SS'), 'value': quotient.toFixed(3), 'className': class_css
                         })
                     };
                 });

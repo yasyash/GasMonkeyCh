@@ -329,53 +329,77 @@ class MonthlyReport extends React.Component {
                                 <td style={{ 'width': '15%' }} rowSpan="2">
                                     <b> Время</b>
                                 </td>
-                                <td style={{ 'width': '85%' }} colSpan="12">
+                                <td style={{ 'width': '85%' }} colSpan="20">
                                     <b> Концентрация, мг/м. куб.</b>
                                 </td>
                             </tr>
-                            <tr >
-                                <td style={{ 'width': '7%' }} >
+                            <tr style = {{'fontSize': '11px'}}>
+                                <td style={{ 'width': '5%' }} >
                                     NO
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     NO2
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     NH3
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     SO2
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     H2S
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     O3
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     CO
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     CH2O
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     PM-1
                                  </td>
-                                <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     PM-2.5
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     PM-10
                                  </td>
-                                 <td style={{ 'width': '7%' }} >
+                                <td style={{ 'width': '5%' }} >
                                     Пыль общая
                                  </td>
-                            </tr>
+                                <td style={{ 'width': '5%' }} >
+                                    бензол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    толуол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    этилбензол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    м,п-ксилол
 
+                                    </td>
+                                <td style={{ 'width': '5%' }} >
+                                    о-ксилол
+                                  </td>
+                                <td style={{ 'width': '5%' }} >
+                                    хлорбензол
+                                </td>
+                                <td style={{ 'width': '5%' }} >
+                                    стирол
+                                 </td>
+                                <td style={{ 'width': '5%' }} >
+                                    фенол
+                                      </td>
+                            </tr>
 
                             {(data_raw) &&// if not empty
                                 data_raw.map((option, i) => (
-                                    <tr key={'tr_' + i}>
+                                    <tr key={'tr_' + i} style = {{'fontSize': '11px'}}>
                                         <td> {option.time}</td>
                                         <td> {option.NO}</td>
                                         <td> {option.NO2}</td>
@@ -389,6 +413,15 @@ class MonthlyReport extends React.Component {
                                         <td> {option['PM2.5']}</td>
                                         <td> {option.PM10}</td>
                                         <td> {option['Пыль общая']}</td>
+                                        <td> {option['бензол']}</td>
+                                        <td> {option['толуол']}</td>
+                                        <td> {option['этилбензол']}</td>
+                                        <td> {option['м,п-ксилол']}</td>
+                                        <td> {option['о-ксилол']}</td>
+                                        <td> {option['хлорбензол']}</td>
+                                        <td> {option['стирол']}</td>
+                                        <td> {option['фенол']}</td>
+
 
 
                                     </tr>
@@ -399,22 +432,30 @@ class MonthlyReport extends React.Component {
                             {(avrg_measure) &&// if not empty
                                 avrg_measure.map((option, i) => (
                                     (i > 0 && i < avrg_measure.length - 1) &&
-                                    <tr key={'trm_' + i}>
-                                       <td> {option[0]}</td>
-                                        <td> {option[1]}</td>
-                                        <td> {option[2]}</td>
-                                        <td> {option[3]}</td>
-                                        <td> {option[4]}</td>
-                                        <td> {option[5]}</td>
-                                        <td> {option[6]}</td>
-                                        <td> {option[7]}</td>
-                                        <td> {option[8]}</td>
-                                        <td> {option[9]}</td>
-                                        <td> {option[10]}</td>
-                                        <td> {option[11]}</td>
-                                        <td> {option[12]}</td>
+                                    <tr key={'trm_' + i} style = {{'fontSize': '11px'}}>
+                                    <td> {option[0]}</td>
+                                    <td> {option[1]}</td>
+                                    <td> {option[2]}</td>
+                                    <td> {option[3]}</td>
+                                    <td> {option[4]}</td>
+                                    <td> {option[5]}</td>
+                                    <td> {option[6]}</td>
+                                    <td> {option[7]}</td>
+                                    <td> {option[8]}</td>
+                                    <td> {option[9]}</td>
+                                    <td> {option[10]}</td>
+                                    <td> {option[11]}</td>
+                                    <td> {option[12]}</td>
+                                    <td> {option[13]}</td>
+                                    <td> {option[14]}</td>
+                                    <td> {option[15]}</td>
+                                    <td> {option[16]}</td>
+                                    <td> {option[17]}</td>
+                                    <td> {option[18]}</td>
+                                    <td> {option[19]}</td>
+                                    <td> {option[20]}</td>
 
-                                    </tr>
+                                </tr>
                                 ))}
 
 
